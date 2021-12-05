@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:csv/csv.dart';
@@ -76,15 +77,33 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onPressed() async {
     var picked = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['csv'],
+      allowedExtensions: ['txt'],
     );
 
     if (picked != null) {
       final input = picked.files.first.bytes!;
 
-      final csv =
-          const CsvToListConverter().convert(String.fromCharCodes(input));
-
+      List<double> signal = String.fromCharCodes(input).split('\n').sublist(0, 50816).map((e) => double.parse(e)).toList();
+      print(_signalGain(signal));
     }
+  }
+
+  List<double> _signalGain(List<double> signal) {
+    int count = 1;
+    List<double> result = [];
+
+    for (var element in signal) {
+      if (count > 794) {
+        count = 1;
+      }
+
+      final y = 100 + (1 / 20) * count * sqrt(count);
+
+      count++;
+
+      result.add(y * element);
+    }
+
+    return result;
   }
 }
