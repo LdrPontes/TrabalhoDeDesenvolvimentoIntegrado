@@ -1,18 +1,11 @@
-package Tarefa02;
+package com.server.integration.integration.utils;
 
 import static org.jblas.FloatMatrix.*;
-import static org.jblas.MatrixFunctions.*;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.poi.hssf.usermodel.*;
 import org.jblas.FloatMatrix;
-import java.util.Random;
 
-public class cgnr {
+public class CGNRUtil {
     public static void main(String[] args) throws IOException {
 
         FloatMatrix g = (FloatMatrix) loadCSVFile("G-1.csv");
